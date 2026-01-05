@@ -541,6 +541,30 @@ async def mcp_stream_info():
         }
     }
 
+# -------------------------------------------------------------------
+# MCP – Azure AI Foundry Compatibility
+# -------------------------------------------------------------------
+@app.get("/mcp")
+async def mcp_discovery():
+    return {
+        "protocol": "model-context-protocol",
+        "protocolVersion": "2024-11-05",
+        "transport": "streamable-http",
+        "endpoint": "/mcp",
+        "streamEndpoint": "/mcp/stream",
+        "serverInfo": {
+            "name": "Todo MCP Server",
+            "version": "1.0.0",
+        },
+    }
+
+
+@app.post("/mcp")
+async def mcp_entrypoint(request: Request):
+    return await mcp_stream_endpoint(request)
+
+
+
 @app.post("/mcp/stream")
 async def mcp_stream_endpoint(request: Request):
     """Main MCP endpoint with streamable HTTP support"""
