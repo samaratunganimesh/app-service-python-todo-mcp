@@ -559,10 +559,6 @@ async def mcp_discovery():
     }
 
 
-@app.post("/mcp")
-async def mcp_entrypoint(request: Request):
-    return await mcp_stream_endpoint(request)
-
 
 
 @app.post("/mcp/stream")
@@ -631,6 +627,10 @@ async def mcp_stream_endpoint(request: Request):
                 "message": f"Internal error: {str(e)}"
             }
         }
+    
+@app.post("/mcp")
+async def mcp_entrypoint(request: Request):
+    return await mcp_stream_endpoint(request)
 
 @app.get("/mcp/capabilities")
 async def mcp_capabilities():
